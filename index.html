@@ -1,21 +1,547 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aurelia Collective | Architectural & Design Guild</title>
-    <meta name="description" content="An elegant guild showcasing active multidisciplinary projects, curated member profiles, user inquiry portal, and an administrative governance dashboard." />
-    <meta property="og:title" content="Aurelia Collective | Architectural & Design Guild" />
-    <meta property="og:description" content="An elegant guild showcasing active multidisciplinary projects, curated member profiles, user inquiry portal, and an administrative governance dashboard." />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  </head>
-  <body class="bg-[#0b0d10] text-[#e8ebf0] selection:bg-[#cbb592] selection:text-[#0b0d10] antialiased">
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Nhóm 4 Tin Học 12S ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #fff5f7;
+            --primary: #ff85a1;
+            --secondary: #ffb3c1;
+            --accent: #ffd1d6;
+            --text-color: #5c4b51;
+            --card-bg: #ffffff;
+            --shadow: 0 8px 20px rgba(255, 133, 161, 0.15);
+        }
 
+        [data-theme="mint"] {
+            --bg-color: #f0fdf4;
+            --primary: #4ade80;
+            --secondary: #86efac;
+            --accent: #bbf7d0;
+            --text-color: #166534;
+        }
+
+        [data-theme="lavender"] {
+            --bg-color: #faf5ff;
+            --primary: #c084fc;
+            --secondary: #e879f9;
+            --accent: #f3e8ff;
+            --text-color: #581c87;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background 0.3s ease;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            background: var(--card-bg);
+            box-shadow: var(--shadow);
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.85;
+        }
+
+        .github-box {
+            margin-top: 12px;
+            font-weight: 600;
+        }
+
+        .github-box a {
+            color: var(--primary);
+            text-decoration: none;
+            word-break: break-all;
+        }
+
+        .github-box a:hover {
+            text-decoration: underline;
+        }
+
+        .theme-selector {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .theme-btn {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            border: 2px solid white;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.2);
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: var(--card-bg);
+            border: 2px solid var(--secondary);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+        }
+
+        .tab-btn.active, .tab-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        main {
+            flex: 1;
+            max-width: 1000px;
+            width: 90%;
+            margin: 0 auto 40px auto;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Thẻ thành viên */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid var(--accent);
+        }
+
+        .card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--secondary);
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+
+        .card .role {
+            display: inline-block;
+            background: var(--accent);
+            padding: 4px 12px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            opacity: 0.9;
+        }
+
+        /* Bài tập & Bảng dữ liệu */
+        .task-container {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            border: 2px solid var(--accent);
+            margin-bottom: 25px;
+        }
+
+        .task-container h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        table.cute-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        table.cute-table th, table.cute-table td {
+            padding: 12px 15px;
+            text-align: center;
+        }
+
+        /* Form chỉnh sửa */
+        .form-container {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            border: 2px solid var(--accent);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            outline: none;
+            font-size: 1rem;
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: var(--primary);
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .btn-danger {
+            background: #f87171;
+            margin-left: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body data-theme="pink">
+
+    <header>
+        <div class="theme-selector">
+            <div class="theme-btn" style="background: #ff85a1;" onclick="setTheme('pink')" title="Hồng ngọt ngào"></div>
+            <div class="theme-btn" style="background: #4ade80;" onclick="setTheme('mint')" title="Xanh mint"></div>
+            <div class="theme-btn" style="background: #c084fc;" onclick="setTheme('lavender')" title="Tím mộng mơ"></div>
+        </div>
+        <h1>✨ Nhóm 4 Tin Học 12 Sinh ✨</h1>
+        <p class="subtitle">Sản phẩm Bài tập nhóm - Kết nối tri thức 🎀</p>
+        
+        <!-- Định dạng đúng như ảnh mẫu trong Google Doc -->
+        <div class="github-box">
+            Link github:<br>
+            <a href="https://github.com/boiazu/Nh-m-4-tin-h-c-12S-CBT-26-27-" target="_blank">
+                https://github.com/boiazu/Nh-m-4-tin-h-c-12S-CBT-26-27-
+            </a>
+        </div>
+    </header>
+
+    <nav>
+        <button class="tab-btn active" onclick="switchTab(event, 'members')"><i class="fa-solid fa-users"></i> Thành viên nhóm</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tasks')"><i class="fa-solid fa-book-open"></i> Bài tập nhóm (Bài 9)</button>
+        <button class="tab-btn" onclick="switchTab(event, 'admin')"><i class="fa-solid fa-pen-to-square"></i> Sửa thông tin</button>
+    </nav>
+
+    <main>
+        <!-- TAB THÀNH VIÊN -->
+        <div id="members" class="tab-content active">
+            <div class="grid-container" id="memberGrid"></div>
+        </div>
+
+        <!-- TAB BÀI TẬP NHÓM (BÀI 9: TẠO DANH SÁCH, BẢNG) -->
+        <div id="tasks" class="tab-content">
+            <div class="task-container">
+                <h3>📖 BÀI 9: Tạo danh sách, bảng - Kết nối tri thức</h3>
+                
+                <h4 style="margin-top: 15px; margin-bottom: 10px;">1. Luyện tập (Bảng điểm)</h4>
+                <div style="overflow-x: auto;">
+                    <table class="cute-table" style="border-collapse: collapse;">
+                        <tr>
+                            <th rowspan="2" style="border: 2px solid #3b82f6; background: #dbeafe;">Họ tên</th>
+                            <th colspan="3" style="border: 2px solid #3b82f6; background: #dbeafe;">Điểm thi</th>
+                        </tr>
+                        <tr>
+                            <td style="border: 2px solid #ef4444; background: #fee2e2; font-weight: bold;">Toán</td>
+                            <td style="border: 2px solid #eab308; background: #fef9c3; font-weight: bold;">Vật lí</td>
+                            <td style="border: 2px solid #22c55e; background: #dcfce7; font-weight: bold;">Hóa học</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <h4 style="margin-top: 25px; margin-bottom: 10px;">2. Vận dụng (Bảng dữ liệu tổng hợp)</h4>
+                <div style="overflow-x: auto;">
+                    <table class="cute-table" style="border-collapse: collapse; width: 100%;">
+                        <tr style="background: var(--accent);">
+                            <th style="border: 2px solid #3b82f6;">Họ tên</th>
+                            <th style="border: 2px solid #3b82f6;">Điểm Toán</th>
+                            <th style="border: 2px solid #3b82f6;">Điểm Vật lí</th>
+                            <th style="border: 2px solid #3b82f6;">Điểm Hóa học</th>
+                        </tr>
+                        <tr>
+                            <td style="border: 2px solid #888;">Nguyễn Văn A</td>
+                            <td style="border: 2px solid #888;">8.5</td>
+                            <td style="border: 2px solid #888;">7.0</td>
+                            <td style="border: 2px solid #888;">9.0</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 2px solid #888;">Trần Thị B</td>
+                            <td style="border: 2px solid #888;">7.0</td>
+                            <td style="border: 2px solid #888;">8.0</td>
+                            <td style="border: 2px solid #888;">8.5</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 2px solid #888;">Lê Quang C</td>
+                            <td style="border: 2px solid #888;">6.5</td>
+                            <td style="border: 2px solid #888;">7.5</td>
+                            <td style="border: 2px solid #888;">8.0</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 2px solid #888;">Phạm Thị D</td>
+                            <td style="border: 2px solid #888;">9.0</td>
+                            <td style="border: 2px solid #888;">8.5</td>
+                            <td style="border: 2px solid #888;">7.5</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB CHỈNH SỬA THÔNG TIN -->
+        <div id="admin" class="tab-content">
+            <div class="form-container">
+                <h3 id="formTitle" style="margin-bottom: 20px; color: var(--primary);">➕ Thêm / Chỉnh sửa thành viên</h3>
+                <input type="hidden" id="editIndex" value="-1">
+                <div class="form-group">
+                    <label>Họ và tên:</label>
+                    <input type="text" id="nameInput" placeholder="Nhập tên thành viên...">
+                </div>
+                <div class="form-group">
+                    <label>Vai trò trong nhóm:</label>
+                    <input type="text" id="roleInput" placeholder="Nhiệm vụ trong nhóm...">
+                </div>
+                <div class="form-group">
+                    <label>Link ảnh đại diện (Avatar URL):</label>
+                    <input type="text" id="avatarInput" placeholder="Dán link ảnh...">
+                </div>
+                <div class="form-group">
+                    <label>Sở thích:</label>
+                    <input type="text" id="hobbyInput" placeholder="Sở thích cá nhân...">
+                </div>
+                <div class="form-group">
+                    <label>Câu nói yêu thích (Quote):</label>
+                    <textarea id="quoteInput" rows="2" placeholder="Châm ngôn sống..."></textarea>
+                </div>
+                <div class="action-btns">
+                    <button class="btn" onclick="saveMember()">Lưu thông tin</button>
+                    <button class="btn btn-danger" id="cancelBtn" style="display:none;" onclick="resetForm()">Hủy</button>
+                </div>
+            </div>
+
+            <div style="margin-top: 30px;" class="form-container">
+                <h3 style="margin-bottom: 15px; color: var(--primary);">📋 Danh sách quản lý thành viên</h3>
+                <div id="manageList" style="display: flex; flex-direction: column; gap: 10px;"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>Made with 💖 by Nhóm 4 Tin Học 12 Sinh | Trường THPT Chuyên Bến Tre</p>
+    </footer>
+
+    <script>
+        let members = JSON.parse(localStorage.getItem('group_members')) || [
+            { name: "Nguyễn Tống Phúc Khang", role: "Nhóm Trưởng & Code", avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Khang", hobby: "Calisthenics, Sinh học", quote: "Cố gắng hết mình mỗi ngày!" },
+            { name: "Thành viên 2", role: "Thiết kế & Slide", avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Member2", hobby: "Vẽ tranh, nghe nhạc", quote: "Teamwork makes the dream work." },
+            { name: "Thành viên 3", role: "Nội dung & Thuyết trình", avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Member3", hobby: "Đọc sách, pha trà sữa", quote: "Luôn giữ nụ cười trên môi." }
+        ];
+
+        function setTheme(themeName) {
+            document.body.setAttribute('data-theme', themeName);
+            localStorage.setItem('preferred_theme', themeName);
+        }
+
+        const savedTheme = localStorage.getItem('preferred_theme');
+        if (savedTheme) setTheme(savedTheme);
+
+        function switchTab(event, tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        function renderMembers() {
+            const grid = document.getElementById('memberGrid');
+            const manageList = document.getElementById('manageList');
+            
+            grid.innerHTML = '';
+            manageList.innerHTML = '';
+
+            members.forEach((m, index) => {
+                grid.innerHTML += `
+                    <div class="card">
+                        <img src="${m.avatar || 'https://api.dicebear.com/7.x/adventurer/svg?seed=' + m.name}" alt="Avatar">
+                        <h3>${m.name}</h3>
+                        <span class="role">${m.role}</span>
+                        <p><strong>🎯 Sở thích:</strong> ${m.hobby}</p>
+                        <p><em>"${m.quote}"</em></p>
+                    </div>
+                `;
+
+                manageList.innerHTML += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; background: var(--bg-color); padding: 10px 15px; border-radius: 12px; border: 1px solid var(--accent);">
+                        <span><strong>${m.name}</strong> (${m.role})</span>
+                        <div>
+                            <button class="btn" style="padding: 6px 12px; font-size: 0.85rem;" onclick="editMember(${index})">Sửa</button>
+                            <button class="btn btn-danger" style="padding: 6px 12px; font-size: 0.85rem;" onclick="deleteMember(${index})">Xóa</button>
+                        </div>
+                    </div>
+                `;
+            });
+            localStorage.setItem('group_members', JSON.stringify(members));
+        }
+
+        function saveMember() {
+            const index = document.getElementById('editIndex').value;
+            const name = document.getElementById('nameInput').value.trim();
+            const role = document.getElementById('roleInput').value.trim();
+            const avatar = document.getElementById('avatarInput').value.trim();
+            const hobby = document.getElementById('hobbyInput').value.trim();
+            const quote = document.getElementById('quoteInput').value.trim();
+
+            if (!name || !role) {
+                alert('Vui lòng nhập tên và vai trò!');
+                return;
+            }
+
+            const memberData = { name, role, avatar, hobby, quote };
+
+            if (index === "-1") {
+                members.push(memberData);
+            } else {
+                members[index] = memberData;
+            }
+
+            resetForm();
+            renderMembers();
+            alert('Đã lưu thông tin thành công! 💖');
+        }
+
+        function editMember(index) {
+            const m = members[index];
+            document.getElementById('editIndex').value = index;
+            document.getElementById('nameInput').value = m.name;
+            document.getElementById('roleInput').value = m.role;
+            document.getElementById('avatarInput').value = m.avatar;
+            document.getElementById('hobbyInput').value = m.hobby;
+            document.getElementById('quoteInput').value = m.quote;
+            
+            document.getElementById('formTitle').innerText = "✏️ Chỉnh sửa thông tin thành viên";
+            document.getElementById('cancelBtn').style.display = "inline-block";
+        }
+
+        function deleteMember(index) {
+            if (confirm('Bạn có chắc muốn xóa thành viên này không?')) {
+                members.splice(index, 1);
+                renderMembers();
+            }
+        }
+
+        function resetForm() {
+            document.getElementById('editIndex').value = "-1";
+            document.getElementById('nameInput').value = "";
+            document.getElementById('roleInput').value = "";
+            document.getElementById('avatarInput').value = "";
+            document.getElementById('hobbyInput').value = "";
+            document.getElementById('quoteInput').value = "";
+            
+            document.getElementById('formTitle').innerText = "➕ Thêm / Chỉnh sửa thành viên";
+            document.getElementById('cancelBtn').style.display = "none";
+        }
+
+        renderMembers();
+    </script>
+</body>
+</html>
