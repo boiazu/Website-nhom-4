@@ -1,0 +1,6 @@
+{
+  "name": "Aurelia Collective | Architectural & Design Guild",
+  "description": "An elegant guild showcasing active multidisciplinary projects, curated member profiles, user inquiry portal, and an administrative governance dashboard.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
