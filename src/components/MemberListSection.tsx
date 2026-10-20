@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { Search, MapPin, ArrowUpRight, Camera, UserPlus } from 'lucide-react';
+import { Search, MapPin, ArrowUpRight, Camera, UserPlus, Edit3 } from 'lucide-react';
 import { Member } from '../types';
 
 interface MemberListSectionProps {
   members: Member[];
   onSelectMember: (memberId: string) => void;
   onOpenAvatarPicker: (member: Member) => void;
+  onEditMember: (member: Member) => void;
   onAddMemberClick?: () => void;
   isAdmin: boolean;
 }
@@ -14,6 +15,7 @@ export function MemberListSection({
   members,
   onSelectMember,
   onOpenAvatarPicker,
+  onEditMember,
   onAddMemberClick,
   isAdmin
 }: MemberListSectionProps) {
@@ -162,16 +164,32 @@ export function MemberListSection({
                     </div>
                   </div>
 
-                  {/* MEMBER NAME - Clickable for profile */}
+                  {/* MEMBER NAME - Clickable for profile + Quick Edit button */}
                   <div className="mb-2">
-                    <button
-                      type="button"
-                      onClick={() => onSelectMember(member.id)}
-                      className="text-left text-xl font-serif-luxury text-neutral-100 hover:text-[#cbb592] transition-colors tracking-wide block"
-                      title={`Click to inspect ${member.name}'s profile`}
-                    >
-                      {member.name}
-                    </button>
+                    <div className="flex items-center justify-between gap-2">
+                      <button
+                        type="button"
+                        onClick={() => onSelectMember(member.id)}
+                        className="text-left text-xl font-serif-luxury text-neutral-100 hover:text-[#cbb592] transition-colors tracking-wide block truncate"
+                        title={`Click to inspect ${member.name}'s profile`}
+                      >
+                        {member.name}
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onEditMember(member);
+                        }}
+                        className="p-1.5 text-neutral-400 hover:text-[#cbb592] hover:bg-[#1b212c] rounded-lg transition-colors flex items-center gap-1 text-[11px] shrink-0"
+                        title={`Rewrite name or change bio for ${member.name}`}
+                      >
+                        <Edit3 className="w-3.5 h-3.5" />
+                        <span className="hidden sm:inline">Edit Info</span>
+                      </button>
+                    </div>
+
                     <p className="text-xs font-medium text-neutral-300 mt-0.5">
                       {member.title}
                     </p>
@@ -208,9 +226,18 @@ export function MemberListSection({
 
                 {/* Card Action Link */}
                 <div className="pt-3 border-t border-neutral-800/80 flex items-center justify-between">
-                  <span className="text-[11px] text-neutral-400">
-                    {member.projectIds.length} Active {member.projectIds.length === 1 ? 'Commission' : 'Commissions'}
-                  </span>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onEditMember(member);
+                    }}
+                    className="text-xs text-neutral-400 hover:text-[#cbb592] transition-colors flex items-center gap-1"
+                    title={`Edit ${member.name}'s details`}
+                  >
+                    <Edit3 className="w-3.5 h-3.5" />
+                    <span>Change Bio & Info</span>
+                  </button>
                   
                   <button
                     type="button"

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X, Mail, MapPin, Phone, Award, Compass, Sparkles, ExternalLink, ShieldCheck, Camera } from 'lucide-react';
+import { X, Mail, MapPin, Phone, Award, Compass, Sparkles, ExternalLink, ShieldCheck, Camera, Edit3 } from 'lucide-react';
 import { Member, Project } from '../types';
 import { AvatarPickerModal } from './AvatarPickerModal';
 
@@ -13,6 +13,7 @@ interface MemberProfileModalProps {
   onUpdateAvatar: (memberId: string, newAvatar: string) => void;
   isAdmin: boolean;
   onOpenAdminEdit?: (member: Member) => void;
+  onEditMember?: (member: Member) => void;
 }
 
 export function MemberProfileModal({
@@ -24,7 +25,8 @@ export function MemberProfileModal({
   onInquireWithMember,
   onUpdateAvatar,
   isAdmin,
-  onOpenAdminEdit
+  onOpenAdminEdit,
+  onEditMember
 }: MemberProfileModalProps) {
   const [isAvatarPickerOpen, setIsAvatarPickerOpen] = useState(false);
 
@@ -43,6 +45,20 @@ export function MemberProfileModal({
           <div className="relative h-36 bg-gradient-to-r from-[#171b22] via-[#212732] to-[#14181f] border-b border-neutral-800">
             <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#cbb592_1px,transparent_1px)] [background-size:16px_16px]" />
             <div className="absolute top-4 right-4 flex items-center gap-2">
+              {onEditMember && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    onClose();
+                    onEditMember(member);
+                  }}
+                  className="px-3 py-1.5 text-xs font-medium bg-[#1e242e] hover:bg-[#28313e] text-[#cbb592] border border-[#cbb592]/30 rounded-lg transition-colors flex items-center gap-1.5 shadow-sm"
+                  title="Rewrite name or change bio"
+                >
+                  <Edit3 className="w-3.5 h-3.5" />
+                  <span>Edit Name & Bio</span>
+                </button>
+              )}
               {isAdmin && onOpenAdminEdit && (
                 <button
                   type="button"
@@ -50,10 +66,10 @@ export function MemberProfileModal({
                     onClose();
                     onOpenAdminEdit(member);
                   }}
-                  className="px-3 py-1.5 text-xs font-medium bg-[#1e242e] hover:bg-[#28313e] text-[#cbb592] border border-[#cbb592]/30 rounded-lg transition-colors flex items-center gap-1.5"
+                  className="px-3 py-1.5 text-xs font-medium bg-[#1e242e] hover:bg-[#28313e] text-neutral-300 hover:text-white border border-neutral-700/60 rounded-lg transition-colors flex items-center gap-1.5"
                 >
                   <ShieldCheck className="w-3.5 h-3.5" />
-                  Edit In Admin
+                  Admin Desk
                 </button>
               )}
               <button
@@ -143,9 +159,25 @@ export function MemberProfileModal({
               {/* Left Column: Narrative & Philosophy */}
               <div className="md:col-span-2 space-y-6">
                 <div>
-                  <h4 className="text-xs font-semibold tracking-wider uppercase text-neutral-400 mb-2">
-                    Architectural Narrative & Bio
-                  </h4>
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="text-xs font-semibold tracking-wider uppercase text-neutral-400">
+                      Architectural Narrative & Bio
+                    </h4>
+                    {onEditMember && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          onClose();
+                          onEditMember(member);
+                        }}
+                        className="text-[11px] text-[#cbb592] hover:underline flex items-center gap-1"
+                        title="Change bio or rewrite info"
+                      >
+                        <Edit3 className="w-3 h-3" />
+                        <span>Edit Bio</span>
+                      </button>
+                    )}
+                  </div>
                   <p className="text-sm leading-relaxed text-neutral-300 font-normal">
                     {member.extendedBio || member.bio}
                   </p>

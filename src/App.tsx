@@ -8,6 +8,7 @@ import { AdminDashboard } from './components/AdminDashboard';
 import { MemberProfileModal } from './components/MemberProfileModal';
 import { ProjectDetailModal } from './components/ProjectDetailModal';
 import { AvatarPickerModal } from './components/AvatarPickerModal';
+import { EditMemberModal } from './components/EditMemberModal';
 import { Footer } from './components/Footer';
 import { Member, Project, Inquiry } from './types';
 import { INITIAL_MEMBERS, INITIAL_PROJECTS, INITIAL_INQUIRIES } from './data/initialData';
@@ -80,6 +81,7 @@ export default function App() {
   const [avatarPickerMember, setAvatarPickerMember] = useState<Member | null>(null);
   const [preselectedMemberForContact, setPreselectedMemberForContact] = useState<string | undefined>(undefined);
   const [preselectedProjectForContact, setPreselectedProjectForContact] = useState<string | undefined>(undefined);
+  const [editingMemberForQuickEdit, setEditingMemberForQuickEdit] = useState<Member | null>(null);
   
   // Admin governance state
   const [isAdmin, setIsAdmin] = useState<boolean>(true); // Enabled by default for easy evaluation of all features
@@ -258,6 +260,7 @@ export default function App() {
               members={members}
               onSelectMember={handleOpenMemberProfile}
               onOpenAvatarPicker={(member) => setAvatarPickerMember(member)}
+              onEditMember={(member) => setEditingMemberForQuickEdit(member)}
               onAddMemberClick={() => setActiveView('admin')}
               isAdmin={isAdmin}
             />
@@ -309,6 +312,7 @@ export default function App() {
               members={members}
               onSelectMember={handleOpenMemberProfile}
               onOpenAvatarPicker={(member) => setAvatarPickerMember(member)}
+              onEditMember={(member) => setEditingMemberForQuickEdit(member)}
               onAddMemberClick={() => setActiveView('admin')}
               isAdmin={isAdmin}
             />
@@ -379,6 +383,9 @@ export default function App() {
           setSelectedMemberId(null);
           setActiveView('admin');
         }}
+        onEditMember={(member) => {
+          setEditingMemberForQuickEdit(member);
+        }}
       />
 
       {/* 2. Project Detail Modal */}
@@ -409,6 +416,17 @@ export default function App() {
           }}
         />
       )}
+
+      {/* 4. Edit Member Info Modal (Rewrite name, change bio & disciplines) */}
+      <EditMemberModal
+        isOpen={editingMemberForQuickEdit !== null}
+        member={editingMemberForQuickEdit}
+        onClose={() => setEditingMemberForQuickEdit(null)}
+        onSave={(updated) => {
+          handleUpdateMember(updated);
+          setEditingMemberForQuickEdit(null);
+        }}
+      />
 
       {/* Footer */}
       <Footer onNavigate={(v) => {
