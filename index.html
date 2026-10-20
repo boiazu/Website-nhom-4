@@ -81,10 +81,6 @@
             word-break: break-all;
         }
 
-        .github-box a:hover {
-            text-decoration: underline;
-        }
-
         .theme-selector {
             position: absolute;
             top: 20px;
@@ -101,10 +97,6 @@
             cursor: pointer;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             transition: transform 0.2s;
-        }
-
-        .theme-btn:hover {
-            transform: scale(1.2);
         }
 
         nav {
@@ -155,7 +147,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Thẻ thành viên */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -197,7 +188,6 @@
             font-weight: 600;
         }
 
-        /* Bài tập danh sách */
         .task-card {
             background: var(--card-bg);
             padding: 25px;
@@ -227,13 +217,6 @@
             background: var(--accent);
             padding: 6px 16px;
             border-radius: 14px;
-            transition: all 0.2s ease;
-        }
-
-        .task-title-link:hover {
-            background: var(--primary);
-            color: white;
-            transform: scale(1.02);
         }
 
         .doc-preview-btn {
@@ -244,12 +227,6 @@
             border-radius: 12px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .doc-preview-btn:hover {
-            background: var(--primary);
-            color: white;
         }
 
         .doc-iframe-container {
@@ -266,7 +243,6 @@
             border: none;
         }
 
-        /* Form & Admin */
         .form-container {
             background: var(--card-bg);
             padding: 25px;
@@ -305,7 +281,6 @@
             border-radius: 14px;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         .btn-danger { background: #f87171; }
@@ -322,9 +297,9 @@
 
     <header>
         <div class="theme-selector">
-            <div class="theme-btn" style="background: #ff85a1;" onclick="setTheme('pink')" title="Hồng ngọt ngào"></div>
-            <div class="theme-btn" style="background: #4ade80;" onclick="setTheme('mint')" title="Xanh mint"></div>
-            <div class="theme-btn" style="background: #c084fc;" onclick="setTheme('lavender')" title="Tím mộng mơ"></div>
+            <div class="theme-btn" style="background: #ff85a1;" onclick="setTheme('pink')"></div>
+            <div class="theme-btn" style="background: #4ade80;" onclick="setTheme('mint')"></div>
+            <div class="theme-btn" style="background: #c084fc;" onclick="setTheme('lavender')"></div>
         </div>
         <h1>✨ Nhóm 4 Tin Học 12 Sinh ✨</h1>
         <p class="subtitle">Sản phẩm Bài tập nhóm - Kết nối tri thức 🎀</p>
@@ -344,24 +319,20 @@
     </nav>
 
     <main>
-        <!-- TAB 1: THÀNH VIÊN -->
         <div id="members" class="tab-content active">
             <div class="grid-container" id="memberGrid"></div>
         </div>
 
-        <!-- TAB 2: DANH SÁCH BÀI TẬP -->
         <div id="tasks" class="tab-content">
             <div id="exerciseList"></div>
         </div>
 
-        <!-- TAB 3: QUẢN LÝ & CẬP NHẬT -->
         <div id="admin" class="tab-content">
-            <!-- QUẢN LÝ BÀI TẬP -->
             <div class="form-container">
                 <h3 id="taskFormTitle" style="margin-bottom: 15px; color: var(--primary);">📝 Thêm / Sửa Bài Tập</h3>
                 <input type="hidden" id="taskEditIndex" value="-1">
                 <div class="form-group">
-                    <label>Mã bài (Ví dụ: "Bài 1", "Bài 2", "Bài 9"):</label>
+                    <label>Mã bài (Ví dụ: "Bài 9"):</label>
                     <input type="text" id="taskCodeInput" placeholder="Ví dụ: Bài 9">
                 </div>
                 <div class="form-group">
@@ -369,46 +340,44 @@
                     <input type="text" id="taskTitleInput" placeholder="Ví dụ: Tạo danh sách, bảng - Kết nối tri thức">
                 </div>
                 <div class="form-group">
-                    <label>Link Google Docs (Chia sẻ):</label>
-                    <input type="text" id="taskDocLinkInput" placeholder="Dán đường link Google Docs bài tập vào đây...">
+                    <label>Link Google Docs:</label>
+                    <input type="text" id="taskDocLinkInput" placeholder="Link Google Docs...">
                 </div>
                 <div class="form-group">
-                    <label>Mô tả ngắn hoặc ghi chú bài tập:</label>
-                    <textarea id="taskDescInput" rows="2" placeholder="Ghi chú thêm về nội dung luyện tập / vận dụng..."></textarea>
+                    <label>Mô tả ngắn:</label>
+                    <textarea id="taskDescInput" rows="2" placeholder="Ghi chú..."></textarea>
                 </div>
                 <button class="btn" onclick="saveTask()">Lưu bài tập</button>
                 <button class="btn btn-danger" id="cancelTaskBtn" style="display:none;" onclick="resetTaskForm()">Hủy</button>
             </div>
 
-            <!-- DANH SÁCH BÀI TẬP ĐỂ SỬA/XÓA -->
             <div class="form-container">
                 <h3 style="margin-bottom: 15px; color: var(--primary);">📋 Danh sách bài tập đã tạo</h3>
                 <div id="adminTaskList" style="display: flex; flex-direction: column; gap: 10px;"></div>
             </div>
 
-            <!-- QUẢN LÝ THÀNH VIÊN -->
             <div class="form-container" style="margin-top: 30px;">
                 <h3 id="formTitle" style="margin-bottom: 15px; color: var(--primary);">➕ Thêm / Chỉnh sửa Thành Viên</h3>
                 <input type="hidden" id="editIndex" value="-1">
                 <div class="form-group">
                     <label>Họ và tên:</label>
-                    <input type="text" id="nameInput" placeholder="Nhập tên thành viên...">
+                    <input type="text" id="nameInput" placeholder="Họ tên...">
                 </div>
                 <div class="form-group">
                     <label>Vai trò:</label>
-                    <input type="text" id="roleInput" placeholder="Ví dụ: Nhóm trưởng...">
+                    <input type="text" id="roleInput" placeholder="Vai trò...">
                 </div>
                 <div class="form-group">
                     <label>Link Avatar URL:</label>
-                    <input type="text" id="avatarInput" placeholder="Link ảnh avatar...">
+                    <input type="text" id="avatarInput" placeholder="Link ảnh...">
                 </div>
                 <div class="form-group">
                     <label>Sở thích:</label>
-                    <input type="text" id="hobbyInput" placeholder="Sở thích cá nhân...">
+                    <input type="text" id="hobbyInput" placeholder="Sở thích...">
                 </div>
                 <div class="form-group">
-                    <label>Quote yêu thích:</label>
-                    <textarea id="quoteInput" rows="2" placeholder="Châm ngôn..."></textarea>
+                    <label>Quote:</label>
+                    <textarea id="quoteInput" rows="2" placeholder="Quote..."></textarea>
                 </div>
                 <button class="btn" onclick="saveMember()">Lưu thành viên</button>
                 <button class="btn btn-danger" id="cancelBtn" style="display:none;" onclick="resetForm()">Hủy</button>
@@ -426,22 +395,31 @@
     </footer>
 
     <script>
-        let defaultTasks = [
+        // Cấu hình dữ liệu gốc cố định trong code
+        const initialTasks = [
             {
                 code: "Bài 9",
                 title: "Tạo danh sách, bảng - Kết nối tri thức",
                 docLink: "https://docs.google.com/document/d/12l3FTe1Eg9x21K-DiKGwtxSIyidgC09syAqHxAk-MF0/edit?usp=drivesdk",
-                desc: "Nội dung bài tập thực hành Tạo danh sách, bảng - Môn Tin học 12."
+                desc: "Bài tập thực hành tạo danh sách và bảng biểu môn Tin học 12."
             }
         ];
 
-        let exerciseData = JSON.parse(localStorage.getItem('group_tasks')) || defaultTasks;
-
-        let members = JSON.parse(localStorage.getItem('group_members')) || [
+        const initialMembers = [
             { name: "Nguyễn Tống Phúc Khang", role: "Nhóm Trưởng & Code", avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Khang", hobby: "Calisthenics, Sinh học", quote: "Cố gắng hết mình mỗi ngày!" },
-            { name: "Thành viên 2", role: "Thiết kế & Slide", avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Member2", hobby: "Vẽ tranh, nghe nhạc", quote: "Teamwork makes the dream work." },
-            { name: "Thành viên 3", role: "Nội dung & Thuyết trình", avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Member3", hobby: "Đọc sách, pha trà sữa", quote: "Luôn giữ nụ cười trên môi." }
+            { name: "Bẩn House", role: "Thành viên", avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=BanHouse", hobby: "Học tập, Thảo luận nhóm", quote: "Đồng hành cùng Nhóm 4!" },
+            { name: "Bảo Linh", role: "Thành viên", avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=BaoLinh", hobby: "Thiết kế & Nội dung", quote: "Sáng tạo và nỗ lực." },
+            { name: "Bảo Ngọc", role: "Thành viên", avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=BaoNgoc", hobby: "Tìm kiếm tài liệu", quote: "Học hỏi không ngừng." },
+            { name: "Bích Ngân", role: "Thành viên", avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=BichNgan", hobby: "Thuyết trình", quote: "Năng lượng tích cực." },
+            { name: "Ánh Ngân", role: "Thành viên", avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=AnhNgan", hobby: "Soạn thảo văn bản", quote: "Chỉn chu từng chi tiết." },
+            { name: "Thanh Mai", role: "Thành viên", avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=ThanhMai", hobby: "Đọc sách, Viết lách", quote: "Luôn vui vẻ, tích cực." },
+            { name: "Khả Hân", role: "Thành viên", avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=KhaHan", hobby: "Âm nhạc, Thiết kế", quote: "Không ngừng hoàn thiện." },
+            { name: "Nhật Quý", role: "Thành viên", avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=NhatQuy", hobby: "Giải bài tập Tin học", quote: "Quyết tâm đạt kết quả tốt." },
+            { name: "Thành Đạt", role: "Thành viên", avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=ThanhDat", hobby: "Công nghệ & Máy tính", quote: "Chủ động và trách nhiệm." }
         ];
+
+        let exerciseData = JSON.parse(localStorage.getItem('group_tasks')) || initialTasks;
+        let members = JSON.parse(localStorage.getItem('group_members')) || initialMembers;
 
         function setTheme(themeName) {
             document.body.setAttribute('data-theme', themeName);
@@ -480,15 +458,15 @@
                     <div class="task-card">
                         <div class="task-header">
                             <div>
-                                <a href="${task.docLink}" target="_blank" class="task-title-link" title="Bấm để mở Google Docs">
+                                <a href="${task.docLink}" target="_blank" class="task-title-link">
                                     <i class="fa-solid fa-file-word"></i> ${task.code}: ${task.title} <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:0.8rem;"></i>
                                 </a>
                             </div>
                             <button class="doc-preview-btn" onclick="toggleDoc(${index})">
-                                <i class="fa-solid fa-eye"></i> Ẩn / Hiện Google Docs
+                                <i class="fa-solid fa-eye"></i> Ẩn / Hiện Docs
                             </button>
                         </div>
-                        <p style="opacity:0.85; margin-bottom: 10px;">${task.desc || 'Chưa có mô tả'}</p>
+                        <p style="opacity:0.85; margin-bottom: 10px;">${task.desc || ''}</p>
                         <div id="docPreview-${index}" class="doc-iframe-container">
                             <iframe src="${embedUrl}" loading="lazy"></iframe>
                         </div>
@@ -511,11 +489,7 @@
 
         function toggleDoc(index) {
             const previewBox = document.getElementById(`docPreview-${index}`);
-            if (previewBox.style.display === 'none') {
-                previewBox.style.display = 'block';
-            } else {
-                previewBox.style.display = 'none';
-            }
+            previewBox.style.display = (previewBox.style.display === 'none') ? 'block' : 'none';
         }
 
         function saveTask() {
@@ -526,7 +500,7 @@
             const desc = document.getElementById('taskDescInput').value.trim();
 
             if (!code || !title || !docLink) {
-                alert('Vui lòng điền đủ Mã bài, Tên bài và Link Google Docs!');
+                alert('Vui lòng nhập đủ thông tin!');
                 return;
             }
 
@@ -540,7 +514,7 @@
 
             resetTaskForm();
             renderExercises();
-            alert('Đã lưu bài tập thành công! 💖');
+            alert('Lưu thành công!');
         }
 
         function editTask(index) {
@@ -556,7 +530,7 @@
         }
 
         function deleteTask(index) {
-            if (confirm('Bạn có chắc chắn muốn xóa bài tập này không?')) {
+            if (confirm('Xóa bài tập này?')) {
                 exerciseData.splice(index, 1);
                 renderExercises();
             }
@@ -568,7 +542,6 @@
             document.getElementById('taskTitleInput').value = "";
             document.getElementById('taskDocLinkInput').value = "";
             document.getElementById('taskDescInput').value = "";
-
             document.getElementById('taskFormTitle').innerText = "📝 Thêm / Sửa Bài Tập";
             document.getElementById('cancelTaskBtn').style.display = "none";
         }
@@ -612,7 +585,7 @@
             const quote = document.getElementById('quoteInput').value.trim();
 
             if (!name || !role) {
-                alert('Vui lòng nhập tên và vai trò!');
+                alert('Nhập tên và vai trò!');
                 return;
             }
 
@@ -626,7 +599,7 @@
 
             resetForm();
             renderMembers();
-            alert('Đã lưu thông tin thành công! 💖');
+            alert('Lưu thành công!');
         }
 
         function editMember(index) {
@@ -638,12 +611,12 @@
             document.getElementById('hobbyInput').value = m.hobby;
             document.getElementById('quoteInput').value = m.quote;
             
-            document.getElementById('formTitle').innerText = "✏️ Chỉnh sửa thông tin thành viên";
+            document.getElementById('formTitle').innerText = "✏️ Chỉnh sửa thành viên";
             document.getElementById('cancelBtn').style.display = "inline-block";
         }
 
         function deleteMember(index) {
-            if (confirm('Bạn có chắc muốn xóa thành viên này không?')) {
+            if (confirm('Xóa thành viên này?')) {
                 members.splice(index, 1);
                 renderMembers();
             }
@@ -656,7 +629,6 @@
             document.getElementById('avatarInput').value = "";
             document.getElementById('hobbyInput').value = "";
             document.getElementById('quoteInput').value = "";
-            
             document.getElementById('formTitle').innerText = "➕ Thêm / Chỉnh sửa thành viên";
             document.getElementById('cancelBtn').style.display = "none";
         }
