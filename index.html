@@ -395,8 +395,9 @@
     </footer>
 
     <script>
-        // DỮ LIỆU MẶC ĐỊNH ĐƯỢC NHÚNG TRỰC TIẾP VÀO CODE (Không sợ mất khi đổi máy hay reset LAN)
-        const defaultTasks = [
+        // BÀI TẬP VÀ THÀNH VIÊN ĐƯỢC LƯU TRỰC TIẾP TRONG CODE NGUỒN GỐC
+        // Đảm bảo 100% mọi thiết bị truy cập link đều lấy chung 1 nguồn dữ liệu này!
+        let defaultTasks = [
             {
                 code: "Bài 9",
                 title: "Tạo danh sách, bảng - Kết nối tri thức",
@@ -405,7 +406,7 @@
             }
         ];
 
-        const defaultMembers = [
+        let defaultMembers = [
             { name: "Nguyễn Tống Phúc Khang", role: "Nhóm Trưởng & Code", avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Khang", hobby: "Calisthenics, Sinh học", quote: "Cố gắng hết mình mỗi ngày!" },
             { name: "Bẩn House", role: "Thành viên", avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=BanHouse", hobby: "Học tập, Thảo luận nhóm", quote: "Đồng hành cùng Nhóm 4!" },
             { name: "Bảo Linh", role: "Thành viên", avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=BaoLinh", hobby: "Thiết kế & Nội dung", quote: "Sáng tạo và nỗ lực." },
@@ -418,12 +419,13 @@
             { name: "Thành Đạt", role: "Thành viên", avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=ThanhDat", hobby: "Công nghệ & Máy tính", quote: "Chủ động và trách nhiệm." }
         ];
 
-        // Lấy dữ liệu từ localStorage, nếu không có hoặc bị trống thì dùng mặc định trong code
-        let savedTasks = JSON.parse(localStorage.getItem('group_tasks'));
-        let exerciseData = (savedTasks && savedTasks.length > 0) ? savedTasks : defaultTasks;
+        // Khởi tạo biến từ dữ liệu gốc chuẩn
+        let exerciseData = defaultTasks;
+        let members = defaultMembers;
 
-        let savedMembers = JSON.parse(localStorage.getItem('group_members'));
-        let members = (savedMembers && savedMembers.length > 0) ? savedMembers : defaultMembers;
+        // Tự động ghi đè lại bộ nhớ local của trình duyệt để xóa sạch dữ liệu lỗi/rỗng trên máy cũ
+        localStorage.setItem('group_tasks', JSON.stringify(exerciseData));
+        localStorage.setItem('group_members', JSON.stringify(members));
 
         function setTheme(themeName) {
             document.body.setAttribute('data-theme', themeName);
