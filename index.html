@@ -306,8 +306,8 @@
         
         <div class="github-box">
             Link github:<br>
-            <a href="https://github.com/boiazu/Nh-m-4-tin-h-c-12S-CBT-26-27-" target="_blank">
-                https://github.com/boiazu/Nh-m-4-tin-h-c-12S-CBT-26-27-
+            <a href="https://github.com/boiazu/Website-nhom-4" target="_blank">
+                https://github.com/boiazu/Website-nhom-4
             </a>
         </div>
     </header>
@@ -395,8 +395,8 @@
     </footer>
 
     <script>
-        // Cấu hình dữ liệu gốc cố định trong code
-        const initialTasks = [
+        // DỮ LIỆU MẶC ĐỊNH ĐƯỢC NHÚNG TRỰC TIẾP VÀO CODE (Không sợ mất khi đổi máy hay reset LAN)
+        const defaultTasks = [
             {
                 code: "Bài 9",
                 title: "Tạo danh sách, bảng - Kết nối tri thức",
@@ -405,7 +405,7 @@
             }
         ];
 
-        const initialMembers = [
+        const defaultMembers = [
             { name: "Nguyễn Tống Phúc Khang", role: "Nhóm Trưởng & Code", avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=Khang", hobby: "Calisthenics, Sinh học", quote: "Cố gắng hết mình mỗi ngày!" },
             { name: "Bẩn House", role: "Thành viên", avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=BanHouse", hobby: "Học tập, Thảo luận nhóm", quote: "Đồng hành cùng Nhóm 4!" },
             { name: "Bảo Linh", role: "Thành viên", avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=BaoLinh", hobby: "Thiết kế & Nội dung", quote: "Sáng tạo và nỗ lực." },
@@ -418,8 +418,12 @@
             { name: "Thành Đạt", role: "Thành viên", avatar: "https://api.dicebear.com/7.x/adventurer/svg?seed=ThanhDat", hobby: "Công nghệ & Máy tính", quote: "Chủ động và trách nhiệm." }
         ];
 
-        let exerciseData = JSON.parse(localStorage.getItem('group_tasks')) || initialTasks;
-        let members = JSON.parse(localStorage.getItem('group_members')) || initialMembers;
+        // Lấy dữ liệu từ localStorage, nếu không có hoặc bị trống thì dùng mặc định trong code
+        let savedTasks = JSON.parse(localStorage.getItem('group_tasks'));
+        let exerciseData = (savedTasks && savedTasks.length > 0) ? savedTasks : defaultTasks;
+
+        let savedMembers = JSON.parse(localStorage.getItem('group_members'));
+        let members = (savedMembers && savedMembers.length > 0) ? savedMembers : defaultMembers;
 
         function setTheme(themeName) {
             document.body.setAttribute('data-theme', themeName);
