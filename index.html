@@ -156,36 +156,245 @@
         .card {
             background: var(--card-bg);
             border-radius: 24px;
-            padding: 25px;
+            padding: 26px 20px;
             text-align: center;
             box-shadow: var(--shadow);
-            position: relative;
-            overflow: hidden;
             border: 2px solid var(--accent);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 11px;
+            min-height: 205px;
+            transition: transform .2s ease, box-shadow .2s ease;
         }
 
-        .card img {
-            width: 100px;
-            height: 100px;
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 26px rgba(255, 133, 161, 0.2);
+        }
+
+        .avatar-trigger {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            margin: 0;
+            background: transparent;
+            border: 0;
             border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid var(--secondary);
-            margin-bottom: 15px;
+            cursor: pointer;
+            transition: transform .2s ease;
         }
 
-        .card h3 {
-            font-size: 1.3rem;
+        .avatar-trigger:hover { transform: scale(1.06); }
+
+        .card .avatar-trigger img {
+            display: block;
+            width: 112px;
+            height: 112px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid var(--secondary);
+            box-shadow: 0 3px 10px rgba(0,0,0,.07);
+        }
+
+        .member-name-trigger {
+            border: 0;
+            padding: 2px 5px;
+            background: transparent;
+            color: var(--text-color);
+            font-size: 1.18rem;
+            line-height: 1.35;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        .member-name-trigger:hover { color: var(--primary); }
+        .avatar-trigger:focus-visible,
+        .member-name-trigger:focus-visible,
+        .mini-btn:focus-visible,
+        .bio-close:focus-visible {
+            outline: 3px solid var(--primary);
+            outline-offset: 3px;
+        }
+
+        .bio-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 18px;
+            background: rgba(45, 35, 40, .52);
+            backdrop-filter: blur(4px);
+        }
+
+        .bio-overlay.open {
+            display: flex;
+            animation: fadeIn .2s ease;
+        }
+
+        .bio-card {
+            position: relative;
+            width: min(560px, 100%);
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 26px 24px 22px;
+            text-align: center;
+            background: var(--card-bg);
+            color: var(--text-color);
+            border: 2px solid var(--accent);
+            border-radius: 25px;
+            box-shadow: 0 18px 55px rgba(0,0,0,.22);
+        }
+
+        .bio-close {
+            position: absolute;
+            top: 12px;
+            right: 14px;
+            width: 36px;
+            height: 36px;
+            border: 0;
+            border-radius: 50%;
+            background: var(--accent);
+            color: var(--text-color);
+            font-size: 1.35rem;
+            cursor: pointer;
+        }
+
+        .bio-avatar {
+            display: block;
+            width: 108px;
+            height: 108px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 5px solid var(--secondary);
+            margin: 5px auto 12px;
+        }
+
+        .bio-card h2 {
+            color: var(--primary);
+            font-size: 1.45rem;
             margin-bottom: 5px;
         }
 
-        .card .role {
+        .bio-role {
             display: inline-block;
-            background: var(--accent);
             padding: 4px 12px;
-            border-radius: 10px;
-            font-size: 0.85rem;
+            border-radius: 12px;
+            background: var(--accent);
+            font-size: .86rem;
+            font-weight: 700;
             margin-bottom: 15px;
-            font-weight: 600;
+        }
+
+        .profile-editor {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 4px 0 18px;
+            text-align: left;
+        }
+
+        .profile-section-editor {
+            background: var(--bg-color);
+            border: 1px solid var(--accent);
+            border-radius: 15px;
+            padding: 12px;
+        }
+
+        .profile-section-top {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .profile-section-top input,
+        .profile-section-editor textarea {
+            width: 100%;
+            padding: 9px 11px;
+            border: 1.5px solid var(--accent);
+            border-radius: 10px;
+            outline: none;
+            background: var(--card-bg);
+            color: var(--text-color);
+            font-size: .94rem;
+        }
+
+        .profile-section-top input { font-weight: 700; }
+        .profile-section-editor textarea { resize: vertical; min-height: 76px; line-height: 1.5; }
+        .profile-section-top input:focus,
+        .profile-section-editor textarea:focus { border-color: var(--primary); }
+
+        .remove-section-btn {
+            flex: 0 0 auto;
+            width: 34px;
+            height: 34px;
+            border: 0;
+            border-radius: 10px;
+            background: #ffe4e6;
+            color: #be123c;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .bio-actions {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 9px;
+            padding-top: 2px;
+        }
+
+        .mini-btn {
+            border: 1px solid var(--secondary);
+            background: var(--bg-color);
+            color: var(--text-color);
+            padding: 9px 13px;
+            border-radius: 11px;
+            font-size: .86rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .2s ease;
+        }
+
+        .mini-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        .bio-hint {
+            display: block;
+            margin-top: 12px;
+            opacity: .68;
+            font-size: .8rem;
+            line-height: 1.45;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        @media (max-width: 520px) {
+            .bio-card { padding: 24px 15px 18px; }
+            .card { min-height: 185px; padding: 20px 14px; }
+            .card .avatar-trigger img { width: 96px; height: 96px; }
+            .member-name-trigger { font-size: 1.05rem; }
+            .mini-btn { font-size: .8rem; padding: 8px 10px; }
         }
 
         .task-card {
@@ -332,12 +541,12 @@
                 <h3 id="taskFormTitle" style="margin-bottom: 15px; color: var(--primary);">📝 Thêm / Sửa Bài Tập</h3>
                 <input type="hidden" id="taskEditIndex" value="-1">
                 <div class="form-group">
-                    <label>Mã bài (Ví dụ: "Bài tập"):</label>
-                    <input type="text" id="taskCodeInput" placeholder="Ví dụ: Bài 9">
+                    <label>Phần đầu tên bài (không bắt buộc):</label>
+                    <input type="text" id="taskCodeInput" placeholder="Ví dụ: Bài 10 (có thể để trống)">
                 </div>
                 <div class="form-group">
                     <label>Tên bài tập:</label>
-                    <input type="text" id="taskTitleInput" placeholder="Danh sách bài tập nhóm hihi">
+                    <input type="text" id="taskTitleInput" placeholder="Tên bài tập, ví dụ: Bài tập nhóm">
                 </div>
                 <div class="form-group">
                     <label>Link Google Docs:</label>
@@ -376,8 +585,12 @@
                     <input type="text" id="hobbyInput" placeholder="Sở thích...">
                 </div>
                 <div class="form-group">
-                    <label>Quote:</label>
-                    <textarea id="quoteInput" rows="2" placeholder="Quote..."></textarea>
+                    <label>Bio giới thiệu ngắn:</label>
+                    <textarea id="bioInput" rows="3" placeholder="Giới thiệu ngắn về thành viên..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Slogan cá nhân:</label>
+                    <textarea id="quoteInput" rows="2" placeholder="Slogan..."></textarea>
                 </div>
                 <button class="btn" onclick="saveMember()">Lưu thành viên</button>
                 <button class="btn btn-danger" id="cancelBtn" style="display:none;" onclick="resetForm()">Hủy</button>
@@ -390,6 +603,31 @@
         </div>
     </main>
 
+    <div id="bioModal" class="bio-overlay" role="dialog" aria-modal="true" aria-labelledby="bioName" onclick="handleBioOverlayClick(event)">
+        <div class="bio-card">
+            <button class="bio-close" type="button" aria-label="Đóng hồ sơ" title="Đóng" onclick="closeBio()">&times;</button>
+            <img id="bioAvatar" class="bio-avatar" src="" alt="Ảnh đại diện thành viên">
+            <h2 id="bioName"></h2>
+            <span id="bioRole" class="bio-role"></span>
+
+            <div id="profileEditor" class="profile-editor"></div>
+
+            <div class="bio-actions">
+                <button class="mini-btn" type="button" onclick="document.getElementById('bioAvatarFile').click()">
+                    <i class="fa-solid fa-camera"></i> Đổi avatar
+                </button>
+                <button class="mini-btn" type="button" onclick="addProfileSection()">
+                    <i class="fa-solid fa-plus"></i> Thêm mục
+                </button>
+                <button class="btn" type="button" onclick="saveBioProfile()">
+                    <i class="fa-solid fa-floppy-disk"></i> Lưu hồ sơ
+                </button>
+            </div>
+            <input id="bioAvatarFile" class="sr-only" type="file" accept="image/*" onchange="updateBioAvatar(event)">
+            <small class="bio-hint">Bạn có thể tự đổi tên từng mục, viết nội dung, thêm mục mới hoặc xóa mục không cần thiết.</small>
+        </div>
+    </div>
+
     <footer>
         <p>Made with 💖 by Nhóm 4 Tin Học 12 Sinh | Trường THPT Chuyên Bến Tre</p>
     </footer>
@@ -399,28 +637,57 @@
         // Đảm bảo 100% mọi thiết bị truy cập link đều lấy chung 1 nguồn dữ liệu này!
         let defaultTasks = [
             {
-                code: "Bài 9",
-                title: "Tạo danh sách, bảng - Kết nối tri thức",
+                code: "",
+                title: "Bài tập nhóm",
                 docLink: "https://docs.google.com/document/d/12l3FTe1Eg9x21K-DiKGwtxSIyidgC09syAqHxAk-MF0/edit?usp=drivesdk",
-                desc: "Bài tập thực hành tạo danh sách và bảng biểu môn Tin học 12."
+                desc: "Danh sách bài tập do nhóm 4 làm"
             }
         ];
 
         let defaultMembers = [
-            { name: "Lê Nhật Quý", role: "Nhóm Trưởng & Code", avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6UNs71GhYTAKIlEN0apEq0oNyCHzH_-uWOdoqXex3bOku5MNxHPrDAhvO&s=10", hobby: "Calisthenics, Sinh học", quote: "Cố gắng hết mình mỗi ngày!" },
-            { name: "Huỳnh Khả Hân", role: "Thành viên", avatar: "https://24hstore.vn/upload_images/images/hinh-nen-con-ran/anh-nen-con-ran-cute-bat-mat.jpg", hobby: "Tìm kiếm tài liệu", quote: "Học hỏi không ngừng." },
-            { name: "Nguyễn Huỳnh Anh Thư", role: "Thành viên", avatar: "https://jbagy.me/wp-content/uploads/2025/03/Hinh-anh-avatar-con-vit-vang-cute-5.jpg", hobby: "Thuyết trình", quote: "Năng lượng tích cực." },
-            { name: "Lê Vũ Hữu Thịnh", role: "Thành viên", avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ22cSlxOgj5iHem4MFzM7jmHY9g2flGwMvjwSGa2eP8w&s", hobby: "Soạn thảo văn bản", quote: "Chỉn chu từng chi tiết." },
-            { name: "Nguyễn Nhật Đăng", role: "Thành viên", avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaJihaHhgJ4RQWH7BTPlTeomJpJPHFDNxuYIU0pU6XJoKKhYNR33-FgrjZ&s=10", hobby: "Đọc sách, Viết lách", quote: "Luôn vui vẻ, tích cực." },
+            { name: "Lê Nhật Quý", role: "Nhóm Trưởng & Code", avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6UNs71GhYTAKIlEN0apEq0oNyCHzH_-uWOdoqXex3bOku5MNxHPrDAhvO&s=10", hobby: "Calisthenics, Sinh học", bio: "Nhóm trưởng kiêm người xây dựng website, phụ trách lập trình và kết nối các thành viên trong quá trình thực hiện dự án.", quote: "Cố gắng hết mình mỗi ngày!" },
+            { name: "Huỳnh Khả Hân", role: "Thành viên", avatar: "https://24hstore.vn/upload_images/images/hinh-nen-con-ran/anh-nen-con-ran-cute-bat-mat.jpg", hobby: "Tìm kiếm tài liệu", bio: "Phụ trách tìm kiếm và chọn lọc tài liệu, hỗ trợ nhóm chuẩn bị nội dung cho các bài tập.", quote: "Học hỏi không ngừng." },
+            { name: "Nguyễn Huỳnh Anh Thư", role: "Thành viên", avatar: "https://jbagy.me/wp-content/uploads/2025/03/Hinh-anh-avatar-con-vit-vang-cute-5.jpg", hobby: "Thuyết trình", bio: "Yêu thích thuyết trình, đảm nhận việc truyền tải nội dung của nhóm một cách rõ ràng và sinh động.", quote: "Năng lượng tích cực." },
+            { name: "Lê Vũ Hữu Thịnh", role: "Thành viên", avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ22cSlxOgj5iHem4MFzM7jmHY9g2flGwMvjwSGa2eP8w&s", hobby: "Soạn thảo văn bản", bio: "Phụ trách soạn thảo và trình bày văn bản, chú trọng sự rõ ràng và chỉn chu trong từng chi tiết.", quote: "Chỉn chu từng chi tiết." },
+            { name: "Nguyễn Nhật Đăng", role: "Thành viên", avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaJihaHhgJ4RQWH7BTPlTeomJpJPHFDNxuYIU0pU6XJoKKhYNR33-FgrjZ&s=10", hobby: "Đọc sách, Viết lách", bio: "Yêu thích đọc sách và viết lách, góp phần xây dựng nội dung và lan tỏa tinh thần tích cực trong nhóm.", quote: "Luôn vui vẻ, tích cực." },
         ];
 
-        // Khởi tạo biến từ dữ liệu gốc chuẩn
-        let exerciseData = defaultTasks;
-        let members = defaultMembers;
+        // Nạp dữ liệu đã chỉnh sửa ở trình duyệt; chỉ dùng dữ liệu mặc định trong lần truy cập đầu.
+        function loadStoredData(key, fallback) {
+            try {
+                const saved = localStorage.getItem(key);
+                if (!saved) return fallback;
+                const parsed = JSON.parse(saved);
+                return Array.isArray(parsed) ? parsed : fallback;
+            } catch (error) {
+                console.warn(`Không thể đọc dữ liệu ${key}:`, error);
+                return fallback;
+            }
+        }
 
-        // Tự động ghi đè lại bộ nhớ local của trình duyệt để xóa sạch dữ liệu lỗi/rỗng trên máy cũ
-        localStorage.setItem('group_tasks', JSON.stringify(exerciseData));
-        localStorage.setItem('group_members', JSON.stringify(members));
+        let exerciseData = loadStoredData('group_tasks', defaultTasks).map(task => {
+            // Chuyển dữ liệu Bài 9 cũ sang tên hiển thị mới mà vẫn giữ nguyên link tài liệu.
+            if (task.code === 'Bài 9' || task.title === 'Tạo danh sách, bảng - Kết nối tri thức') {
+                return { ...task, code: '', title: 'Bài tập nhóm', desc: 'Danh sách bài tập do nhóm 4 làm' };
+            }
+            return task;
+        });
+
+        let members = loadStoredData('group_members', defaultMembers).map((member, index) => {
+            const normalized = { bio: '', ...member };
+            if (!Array.isArray(normalized.profile)) {
+                normalized.profile = [];
+                if (normalized.bio) normalized.profile.push({ title: 'Giới thiệu bản thân', content: normalized.bio });
+                if (normalized.hobby) normalized.profile.push({ title: 'Sở thích', content: normalized.hobby });
+                if (normalized.quote) normalized.profile.push({ title: 'Slogan', content: normalized.quote });
+            }
+            normalized.profile = normalized.profile.map((section, sectionIndex) => ({
+                id: section.id || `p-${index}-${sectionIndex}-${Date.now()}`,
+                title: String(section.title ?? ''),
+                content: String(section.content ?? '')
+            }));
+            return normalized;
+        });
 
         function setTheme(themeName) {
             document.body.setAttribute('data-theme', themeName);
@@ -446,6 +713,20 @@
             return url;
         }
 
+        function escapeHTML(value) {
+            return String(value ?? '').replace(/[&<>"']/g, character => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            }[character]));
+        }
+
+        function getMemberAvatar(member) {
+            return member.avatar || `https://api.dicebear.com/7.x/adventurer/svg?seed=${encodeURIComponent(member.name || 'member')}`;
+        }
+
         function renderExercises() {
             const listContainer = document.getElementById('exerciseList');
             const adminTaskList = document.getElementById('adminTaskList');
@@ -453,21 +734,24 @@
             adminTaskList.innerHTML = '';
 
             exerciseData.forEach((task, index) => {
-                const embedUrl = getEmbedUrl(task.docLink);
+                const embedUrl = escapeHTML(getEmbedUrl(task.docLink));
+                const taskLabel = [task.code, task.title].filter(Boolean).map(escapeHTML).join(': ');
+                const safeDocLink = escapeHTML(task.docLink || '');
+                const taskDesc = escapeHTML(task.desc || '');
 
                 listContainer.innerHTML += `
                     <div class="task-card">
                         <div class="task-header">
                             <div>
-                                <a href="${task.docLink}" target="_blank" class="task-title-link">
-                                    <i class="fa-solid fa-file-word"></i> ${task.code}: ${task.title} <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:0.8rem;"></i>
+                                <a href="${safeDocLink}" target="_blank" rel="noopener noreferrer" class="task-title-link">
+                                    <i class="fa-solid fa-file-word"></i> ${taskLabel} <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:0.8rem;"></i>
                                 </a>
                             </div>
                             <button class="doc-preview-btn" onclick="toggleDoc(${index})">
                                 <i class="fa-solid fa-eye"></i> Ẩn / Hiện Docs
                             </button>
                         </div>
-                        <p style="opacity:0.85; margin-bottom: 10px;">${task.desc || ''}</p>
+                        <p style="opacity:0.85; margin-bottom: 10px;">${taskDesc}</p>
                         <div id="docPreview-${index}" class="doc-iframe-container">
                             <iframe src="${embedUrl}" loading="lazy"></iframe>
                         </div>
@@ -476,7 +760,7 @@
 
                 adminTaskList.innerHTML += `
                     <div style="display: flex; justify-content: space-between; align-items: center; background: var(--bg-color); padding: 10px 15px; border-radius: 12px; border: 1px solid var(--accent);">
-                        <span><strong>${task.code}:</strong> ${task.title}</span>
+                        <span><strong>${taskLabel}</strong></span>
                         <div>
                             <button class="btn" style="padding: 6px 12px; font-size: 0.85rem;" onclick="editTask(${index})">Sửa</button>
                             <button class="btn btn-danger" style="padding: 6px 12px; font-size: 0.85rem;" onclick="deleteTask(${index})">Xóa</button>
@@ -500,8 +784,8 @@
             const docLink = document.getElementById('taskDocLinkInput').value.trim();
             const desc = document.getElementById('taskDescInput').value.trim();
 
-            if (!code || !title || !docLink) {
-                alert('Vui lòng nhập đủ thông tin!');
+            if ((!code && !title) || !docLink) {
+                alert('Vui lòng nhập tên bài tập và link tài liệu!');
                 return;
             }
 
@@ -521,8 +805,8 @@
         function editTask(index) {
             const t = exerciseData[index];
             document.getElementById('taskEditIndex').value = index;
-            document.getElementById('taskCodeInput').value = t.code;
-            document.getElementById('taskTitleInput').value = t.title;
+            document.getElementById('taskCodeInput').value = t.code || '';
+            document.getElementById('taskTitleInput').value = t.title || '';
             document.getElementById('taskDocLinkInput').value = t.docLink;
             document.getElementById('taskDescInput').value = t.desc || '';
 
@@ -547,6 +831,19 @@
             document.getElementById('cancelTaskBtn').style.display = "none";
         }
 
+        let activeBioIndex = null;
+
+        function persistMembers() {
+            try {
+                localStorage.setItem('group_members', JSON.stringify(members));
+                return true;
+            } catch (error) {
+                console.error('Không thể lưu hồ sơ thành viên:', error);
+                alert('Dung lượng lưu trong trình duyệt đã đầy. Hãy thử dùng ảnh nhỏ hơn.');
+                return false;
+            }
+        }
+
         function renderMembers() {
             const grid = document.getElementById('memberGrid');
             const manageList = document.getElementById('manageList');
@@ -554,27 +851,198 @@
             manageList.innerHTML = '';
 
             members.forEach((m, index) => {
+                const name = escapeHTML(m.name || `Thành viên ${index + 1}`);
+                const role = escapeHTML(m.role || 'Thành viên');
+                const avatar = escapeHTML(getMemberAvatar(m));
+
+                // Trang danh sách chỉ hiển thị avatar và tên theo yêu cầu.
                 grid.innerHTML += `
                     <div class="card">
-                        <img src="${m.avatar || 'https://api.dicebear.com/7.x/adventurer/svg?seed=' + m.name}" alt="Avatar">
-                        <h3>${m.name}</h3>
-                        <span class="role">${m.role}</span>
-                        <p><strong>🎯 Sở thích:</strong> ${m.hobby}</p>
-                        <p><em>"${m.quote}"</em></p>
+                        <button class="avatar-trigger" type="button" onclick="openBio(${index})" aria-label="Mở hồ sơ của ${name}" title="Mở hồ sơ">
+                            <img src="${avatar}" alt="Avatar của ${name}" onerror="this.onerror=null;this.src='https://api.dicebear.com/7.x/adventurer/svg?seed=member${index}'">
+                        </button>
+                        <button class="member-name-trigger" type="button" onclick="openBio(${index})" title="Mở hồ sơ">${name}</button>
                     </div>
                 `;
 
                 manageList.innerHTML += `
-                    <div style="display: flex; justify-content: space-between; align-items: center; background: var(--bg-color); padding: 10px 15px; border-radius: 12px; border: 1px solid var(--accent);">
-                        <span><strong>${m.name}</strong> (${m.role})</span>
-                        <div>
-                            <button class="btn" style="padding: 6px 12px; font-size: 0.85rem;" onclick="editMember(${index})">Sửa</button>
-                            <button class="btn btn-danger" style="padding: 6px 12px; font-size: 0.85rem;" onclick="deleteMember(${index})">Xóa</button>
+                    <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; background:var(--bg-color); padding:10px 15px; border-radius:12px; border:1px solid var(--accent);">
+                        <span><strong>${name}</strong> (${role})</span>
+                        <div style="flex-shrink:0; display:flex; gap:6px;">
+                            <button class="btn" style="padding:6px 12px; font-size:.85rem;" onclick="editMember(${index})">Sửa</button>
+                            <button class="btn btn-danger" style="padding:6px 12px; font-size:.85rem;" onclick="deleteMember(${index})">Xóa</button>
                         </div>
                     </div>
                 `;
             });
-            localStorage.setItem('group_members', JSON.stringify(members));
+            persistMembers();
+        }
+
+        function openBio(index) {
+            if (!members[index]) return;
+            activeBioIndex = index;
+            const member = members[index];
+            document.getElementById('bioAvatar').src = getMemberAvatar(member);
+            document.getElementById('bioAvatar').alt = `Ảnh đại diện của ${member.name || 'thành viên'}`;
+            document.getElementById('bioName').textContent = member.name || 'Thành viên';
+            document.getElementById('bioRole').textContent = member.role || 'Thành viên';
+            renderProfileEditor(member.profile || []);
+            document.getElementById('bioModal').classList.add('open');
+            document.body.style.overflow = 'hidden';
+            document.querySelector('.bio-close').focus();
+        }
+
+        function closeBio() {
+            document.getElementById('bioModal').classList.remove('open');
+            document.body.style.overflow = '';
+            activeBioIndex = null;
+        }
+
+        function handleBioOverlayClick(event) {
+            if (event.target.id === 'bioModal') closeBio();
+        }
+
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && document.getElementById('bioModal').classList.contains('open')) closeBio();
+        });
+
+        function collectProfileSections() {
+            return Array.from(document.querySelectorAll('.profile-section-editor')).map((row, index) => ({
+                id: row.dataset.sectionId || `section-${Date.now()}-${index}`,
+                title: row.querySelector('.profile-section-title').value.trim(),
+                content: row.querySelector('.profile-section-content').value.trim()
+            }));
+        }
+
+        function renderProfileEditor(profile) {
+            const editor = document.getElementById('profileEditor');
+            editor.innerHTML = '';
+
+            if (!profile.length) {
+                const empty = document.createElement('p');
+                empty.textContent = 'Hồ sơ đang trống. Hãy thêm mục đầu tiên để giới thiệu bản thân nhé!';
+                empty.style.cssText = 'text-align:center;opacity:.7;padding:10px 4px;line-height:1.5;';
+                editor.appendChild(empty);
+                return;
+            }
+
+            profile.forEach((section, index) => {
+                const row = document.createElement('div');
+                row.className = 'profile-section-editor';
+                row.dataset.sectionId = section.id || `section-${Date.now()}-${index}`;
+
+                const top = document.createElement('div');
+                top.className = 'profile-section-top';
+                const title = document.createElement('input');
+                title.type = 'text';
+                title.className = 'profile-section-title';
+                title.placeholder = 'Tên mục, ví dụ: Sở thích';
+                title.maxLength = 60;
+                title.value = section.title || '';
+                title.setAttribute('aria-label', `Tên mục ${index + 1}`);
+
+                const remove = document.createElement('button');
+                remove.type = 'button';
+                remove.className = 'remove-section-btn';
+                remove.title = 'Xóa mục này';
+                remove.setAttribute('aria-label', `Xóa mục ${index + 1}`);
+                remove.innerHTML = '<i class="fa-solid fa-trash"></i>';
+                remove.addEventListener('click', () => removeProfileSection(index));
+                top.append(title, remove);
+
+                const content = document.createElement('textarea');
+                content.className = 'profile-section-content';
+                content.placeholder = 'Viết nội dung bạn muốn chia sẻ...';
+                content.rows = 3;
+                content.maxLength = 5000;
+                content.value = section.content || '';
+                content.setAttribute('aria-label', `Nội dung mục ${index + 1}`);
+
+                row.append(top, content);
+                editor.appendChild(row);
+            });
+        }
+
+        function addProfileSection() {
+            if (activeBioIndex === null || !members[activeBioIndex]) return;
+            const profile = collectProfileSections();
+            profile.push({ id: `new-${Date.now()}`, title: 'Mục mới', content: '' });
+            renderProfileEditor(profile);
+            const inputs = document.querySelectorAll('.profile-section-title');
+            if (inputs.length) {
+                inputs[inputs.length - 1].focus();
+                inputs[inputs.length - 1].select();
+            }
+        }
+
+        function removeProfileSection(index) {
+            const profile = collectProfileSections();
+            profile.splice(index, 1);
+            renderProfileEditor(profile);
+        }
+
+        function saveBioProfile() {
+            if (activeBioIndex === null || !members[activeBioIndex]) return;
+            const profile = collectProfileSections()
+                .filter(section => section.title || section.content);
+            members[activeBioIndex].profile = profile;
+
+            // Giữ các trường cũ đồng bộ để tương thích với mục Quản lý thành viên.
+            const findContent = title => profile.find(section => section.title.toLocaleLowerCase('vi') === title.toLocaleLowerCase('vi'))?.content || '';
+            members[activeBioIndex].bio = findContent('Giới thiệu bản thân');
+            members[activeBioIndex].hobby = findContent('Sở thích');
+            members[activeBioIndex].quote = findContent('Slogan');
+
+            persistMembers();
+            renderProfileEditor(profile);
+            alert('Đã lưu hồ sơ thành viên!');
+        }
+
+        function updateBioAvatar(event) {
+            const file = event.target.files && event.target.files[0];
+            if (!file || activeBioIndex === null) return;
+            if (!file.type.startsWith('image/')) {
+                alert('Vui lòng chọn một tệp hình ảnh.');
+                event.target.value = '';
+                return;
+            }
+            if (file.size > 10 * 1024 * 1024) {
+                alert('Ảnh quá lớn. Vui lòng chọn ảnh nhỏ hơn 10 MB.');
+                event.target.value = '';
+                return;
+            }
+
+            const objectUrl = URL.createObjectURL(file);
+            const image = new Image();
+            image.onload = () => {
+                const canvas = document.createElement('canvas');
+                const side = 360;
+                canvas.width = side;
+                canvas.height = side;
+                const context = canvas.getContext('2d');
+                const cropSide = Math.min(image.naturalWidth, image.naturalHeight);
+                const cropX = (image.naturalWidth - cropSide) / 2;
+                const cropY = (image.naturalHeight - cropSide) / 2;
+                context.drawImage(image, cropX, cropY, cropSide, cropSide, 0, 0, side, side);
+
+                try {
+                    members[activeBioIndex].avatar = canvas.toDataURL('image/jpeg', 0.76);
+                    document.getElementById('bioAvatar').src = members[activeBioIndex].avatar;
+                    renderMembers();
+                    alert('Đã cập nhật avatar!');
+                } catch (error) {
+                    console.error(error);
+                    alert('Không thể lưu ảnh này. Vui lòng thử ảnh khác.');
+                }
+                URL.revokeObjectURL(objectUrl);
+                event.target.value = '';
+            };
+            image.onerror = () => {
+                URL.revokeObjectURL(objectUrl);
+                event.target.value = '';
+                alert('Không thể đọc ảnh. Vui lòng thử tệp khác.');
+            };
+            image.src = objectUrl;
         }
 
         function saveMember() {
@@ -583,6 +1051,7 @@
             const role = document.getElementById('roleInput').value.trim();
             const avatar = document.getElementById('avatarInput').value.trim();
             const hobby = document.getElementById('hobbyInput').value.trim();
+            const bio = document.getElementById('bioInput').value.trim();
             const quote = document.getElementById('quoteInput').value.trim();
 
             if (!name || !role) {
@@ -590,12 +1059,21 @@
                 return;
             }
 
-            const memberData = { name, role, avatar, hobby, quote };
+            const standardProfile = [
+                { id: `intro-${Date.now()}`, title: 'Giới thiệu bản thân', content: bio },
+                { id: `hobby-${Date.now()}`, title: 'Sở thích', content: hobby },
+                { id: `slogan-${Date.now()}`, title: 'Slogan', content: quote }
+            ];
+            const previous = index === "-1" ? null : members[Number(index)];
+            const customProfile = previous?.profile?.filter(section =>
+                !['giới thiệu bản thân', 'sở thích', 'slogan'].includes((section.title || '').toLocaleLowerCase('vi'))
+            ) || [];
+            const memberData = { name, role, avatar, hobby, bio, quote, profile: [...standardProfile, ...customProfile] };
 
             if (index === "-1") {
                 members.push(memberData);
             } else {
-                members[index] = memberData;
+                members[Number(index)] = memberData;
             }
 
             resetForm();
@@ -608,9 +1086,10 @@
             document.getElementById('editIndex').value = index;
             document.getElementById('nameInput').value = m.name;
             document.getElementById('roleInput').value = m.role;
-            document.getElementById('avatarInput').value = m.avatar;
-            document.getElementById('hobbyInput').value = m.hobby;
-            document.getElementById('quoteInput').value = m.quote;
+            document.getElementById('avatarInput').value = m.avatar || '';
+            document.getElementById('hobbyInput').value = m.hobby || (m.profile || []).find(section => section.title === 'Sở thích')?.content || '';
+            document.getElementById('bioInput').value = m.bio || (m.profile || []).find(section => section.title === 'Giới thiệu bản thân')?.content || '';
+            document.getElementById('quoteInput').value = m.quote || (m.profile || []).find(section => section.title === 'Slogan')?.content || '';
             
             document.getElementById('formTitle').innerText = "✏️ Chỉnh sửa thành viên";
             document.getElementById('cancelBtn').style.display = "inline-block";
@@ -629,6 +1108,7 @@
             document.getElementById('roleInput').value = "";
             document.getElementById('avatarInput').value = "";
             document.getElementById('hobbyInput').value = "";
+            document.getElementById('bioInput').value = "";
             document.getElementById('quoteInput').value = "";
             document.getElementById('formTitle').innerText = "➕ Thêm / Chỉnh sửa thành viên";
             document.getElementById('cancelBtn').style.display = "none";
